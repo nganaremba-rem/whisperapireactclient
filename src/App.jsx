@@ -17,7 +17,7 @@ export default function App() {
     mutationFn: (myFormData) => {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/api/transcribe',
+        url: 'http://139.59.254.243:3000/api/transcribe',
         data: myFormData,
       })
         .then((res) => {

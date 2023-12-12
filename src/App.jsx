@@ -17,7 +17,7 @@ export default function App() {
     mutationFn: (myFormData) => {
       return axios({
         method: 'POST',
-        url: 'https://whisperapireactclient-remku.vercel.app/api/transcribe',
+        url: '/api/transcribe',
         data: myFormData,
       })
         .then((res) => {

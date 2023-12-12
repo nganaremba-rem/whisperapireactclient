@@ -9,7 +9,7 @@
       "src": "/(.*)",
       "status": 301,
       "headers": {
-        "Location": "whisperapireactclient-remku.vercel.app/$1"
+        "Location": "https://whisperapireactclient-remku.vercel.app/$1"
       }
     }
   ]

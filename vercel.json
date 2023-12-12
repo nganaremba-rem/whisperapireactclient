@@ -1,16 +1,8 @@
 {
-  "routes": [
+  "redirects": [
     {
-      "src": "/api/(.*)",
-      "dest": "http://139.59.254.243:3000/api/$1",
-      "methods": ["GET", "POST"]
-    },
-    {
-      "src": "/(.*)",
-      "status": 301,
-      "headers": {
-        "Location": "https://whisperapireactclient-remku.vercel.app/$1"
-      }
+      "source": "/api/(.*)",
+      "destination": "http://139.59.254.243:3000/api/$1"
     }
   ]
 }

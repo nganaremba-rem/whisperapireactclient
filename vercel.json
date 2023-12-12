@@ -1,0 +1,16 @@
+{
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "http://139.59.254.243:3000/$1",
+      "methods": ["GET", "POST"]
+    },
+    {
+      "src": "/(.*)",
+      "status": 301,
+      "headers": {
+        "Location": "https://whisperapireactclient.vercel.app/$1"
+      }
+    }
+  ]
+}

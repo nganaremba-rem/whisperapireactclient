@@ -1,11 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useRef, useState } from 'react'
+import { FaSearch, FaStopCircle } from 'react-icons/fa'
 import { MdClear, MdKeyboardVoice } from 'react-icons/md'
 import Select from 'react-select'
 import useAudioRecorder from './hooks/useAudioRecorder'
-import { FaStopCircle } from 'react-icons/fa'
 
 const modelOptions = [
   {
@@ -31,6 +30,8 @@ const modelOptions = [
 ]
 
 export default function App() {
+  const cancelTokenSourceRef = useRef(axios.CancelToken.source())
+
   const [searchText, setSearchText] = useState('')
   const { audioBlob, isRecording, recordNow } = useAudioRecorder()
   const [language, setLanguage] = useState('ja')
@@ -39,25 +40,26 @@ export default function App() {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
-    mutationFn: (myFormData) => {
-      return axios({
-        method: 'POST',
-        url: '/api/transcribe',
-        data: myFormData,
-      })
-        .then((res) => {
-          setError('')
-          return res?.data?.text
+    mutationFn: async (myFormData) => {
+      try {
+        const { data } = await axios.post('/api/transcribe', myFormData, {
+          cancelToken: cancelTokenSourceRef.current.token,
         })
-        .catch((err) => {
+        setError('')
+        return data?.text
+      } catch (err) {
+        // Check if the error is due to cancellation
+        if (axios.isCancel(err)) {
+          console.log('Request canceled:', err.message)
+        } else {
           throw new Error(err)
-        })
+        }
+      }
     },
     onSuccess: (data) => {
       setSearchText(data)
     },
     onError: (err) => {
-      console.log(err.stack)
       setError(err.message)
     },
   })
@@ -66,9 +68,12 @@ export default function App() {
     if (audioBlob) {
       const myFormData = new FormData()
       myFormData.append('audioToTranscribe', audioBlob)
-      myFormData.append('language', language || 'Japanese')
+      myFormData.append('language', language || 'ja')
       myFormData.append('model', model || 'base')
 
+      if (isPending) {
+        cancelPreviousMutation()
+      }
       mutate(myFormData)
     }
   }, [audioBlob])
@@ -76,6 +81,14 @@ export default function App() {
   useEffect(() => {
     setError('')
   }, [isRecording])
+
+  const cancelPreviousMutation = () => {
+    if (cancelTokenSourceRef.current) {
+      cancelTokenSourceRef.current.cancel('Previous mutation canceled')
+      // Create a new CancelToken source for the next request
+      cancelTokenSourceRef.current = axios.CancelToken.source()
+    }
+  }
 
   const colourStyles = {
     control: (styles) => ({ ...styles, backgroundColor: 'rgb(26, 32, 44)' }),

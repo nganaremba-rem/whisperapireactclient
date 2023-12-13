@@ -5,12 +5,37 @@ import { FaSearch } from 'react-icons/fa'
 import { MdClear, MdKeyboardVoice } from 'react-icons/md'
 import Select from 'react-select'
 import useAudioRecorder from './hooks/useAudioRecorder'
+import { FaStopCircle } from 'react-icons/fa'
+
+const modelOptions = [
+  {
+    label: 'Tiny [39MB 1GB-VRAM Speed: 32x]',
+    value: 'tiny',
+  },
+  {
+    label: 'Base [74MB 1GB-VRAM Speed: 16x]',
+    value: 'base',
+  },
+  {
+    label: 'Small [244MB 2GB-VRAM Speed: 6x]',
+    value: 'small',
+  },
+  {
+    label: 'Medium [769MB 5GB-VRAM Speed: 2x]',
+    value: 'medium',
+  },
+  {
+    label: 'Large [1550MB 10GB-VRAM Speed: 1x]',
+    value: 'large',
+  },
+]
 
 export default function App() {
   const [searchText, setSearchText] = useState('')
   const { audioBlob, isRecording, recordNow } = useAudioRecorder()
   const [language, setLanguage] = useState('Japanese')
   const [model, setModel] = useState('base')
+  const [error, setError] = useState('')
 
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
@@ -21,12 +46,19 @@ export default function App() {
         data: myFormData,
       })
         .then((res) => {
+          setError('')
           return res?.data?.text
         })
-        .catch((err) => err)
+        .catch((err) => {
+          throw new Error(err)
+        })
     },
     onSuccess: (data) => {
       setSearchText(data)
+    },
+    onError: (err) => {
+      console.log(err.stack)
+      setError(err.message)
     },
   })
 
@@ -78,99 +110,106 @@ export default function App() {
 
   return (
     <>
-      <div className='min-h-[100svh] p-6 bg-gray-900 text-slate-200 flex flex-col sm:items-center '>
-        <h1 className='text-4xl font-bold py-5 my-10'>
-          Voice to Text Transcription
-        </h1>
-        <div className='flex w-full sm:w-max flex-col  sm:justify-center  gap-3'>
-          <div className='grid  sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center sm:px-20'>
-            <label htmlFor='language'>Language</label>
-            <Select
-              styles={colourStyles}
-              onChange={(option) => {
-                setLanguage(option?.value)
-              }}
-              options={[
-                {
-                  label: 'Japanese',
-                  value: 'Japanese',
-                },
-                {
-                  label: 'English',
-                  value: 'English',
-                },
-              ]}
-            />
+      <div className='min-h-[100svh] bg-gray-900 sm:bg-gray-950 text-slate-200 flex flex-col sm:items-center '>
+        <div className='sm:max-w-[40rem] my-5 sm:shadow-md sm:bg-gray-900 p-6 sm:p-10 rounded-xl mt-5'>
+          <h1 className='text-4xl font-bold text-center pb-16'>
+            Voice to Text Transcription
+          </h1>
+          <div className='flex w-full space-y-10 sm:w-max flex-col  sm:justify-center  gap-3'>
+            <div className='grid space-y-5 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
+              <label htmlFor='language'>Language</label>
+              <div className='flex items-center'>
+                <button
+                  onClick={() => setLanguage('Japanese')}
+                  className={`flex-1 ${
+                    language === 'Japanese' ? 'bg-sky-600' : 'bg-gray-700'
+                  } font-bold tracking-wide rounded p-2`}
+                >
+                  日本語
+                </button>
+                <button
+                  onClick={() => setLanguage('English')}
+                  className={`flex-1 ${
+                    language === 'English' ? 'bg-sky-600' : 'bg-gray-700'
+                  } tracking-wide rounded p-2`}
+                >
+                  English
+                </button>
+              </div>
+            </div>
+            <div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center'>
+              <label htmlFor='model'>Model</label>
+              <Select
+                styles={colourStyles}
+                onChange={(option) => {
+                  setModel(option?.value)
+                }}
+                options={modelOptions}
+                defaultValue={() => {
+                  return modelOptions.find((option) => option.value === model)
+                }}
+              />
+            </div>
           </div>
-          <div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center sm:px-20'>
-            <label htmlFor='model'>Model</label>
-            <Select
-              styles={colourStyles}
-              onChange={(option) => {
-                setModel(option?.value)
-              }}
-              options={[
-                {
-                  label: 'Tiny [39MB 1GB-VRAM Speed: 32x]',
-                  value: 'tiny',
-                },
-                {
-                  label: 'Base [74MB 1GB-VRAM Speed: 16x]',
-                  value: 'base',
-                },
-                {
-                  label: 'Small [244MB 2GB-VRAM Speed: 6x]',
-                  value: 'small',
-                },
-                {
-                  label: 'Medium [769MB 5GB-VRAM Speed: 2x]',
-                  value: 'medium',
-                },
-                {
-                  label: 'Large [1550MB 10GB-VRAM Speed: 1x]',
-                  value: 'large',
-                },
-              ]}
-            />
-          </div>
-        </div>
 
-        <div className=' bg-gray-800 my-14 ring-gray-200 focus-within:ring-sky-600 pointer-events-none px-3 py-2 flex w-full sm:w-max items-center rounded-lg  ring-2 '>
-          <div>
-            <FaSearch size={20} className='text-slate-400' />
-          </div>
-          <input
-            value={isPending ? 'Please wait...' : searchText}
-            className='bg-gray-800 w-full min-w-0 px-3 pointer-events-auto  outline-none focus:ring-cyan-400 text-xl'
-            type='text'
-            name='search'
-            id='search'
-            onChange={(e) => {
-              setSearchText(e.target.value)
-            }}
-          />
-          <button
-            onClick={() => {
-              if (!searchText) return
-              setSearchText('')
-            }}
+          <div
             className={`${
-              !searchText ? 'invisible' : 'visible'
-            } border-r pointer-events-auto border-r-slate-600 p-1 hover:bg-gray-900`}
+              error !== '' && !isRecording ? 'visible' : 'invisible'
+            } py-6 text-red-400 font-bold tracking-wide`}
           >
-            <MdClear size={20} />
-          </button>
+            {error || 'Error'}
+          </div>
 
-          <button
-            onClick={recordNow}
-            className={` ${
-              isRecording
-                ? 'bg-red-600 text-white  animate-my_pulse  '
-                : 'bg-transparent text-red-600'
-            } cursor-pointer active:bg-gray-900  pointer-events-auto ml-2  active:text-slate-200 p-2  rounded-full`}
-          >
-            <MdKeyboardVoice size={30} />
-          </button>
+          <div className=' bg-gray-800 mb-5 ring-gray-200 focus-within:ring-sky-600 pointer-events-none px-3 py-2 flex w-full items-center rounded-lg  ring-2 '>
+            <div>
+              <FaSearch size={20} className='text-slate-400' />
+            </div>
+            <input
+              value={
+                isPending
+                  ? 'Please wait...'
+                  : isRecording
+                  ? 'Recording...'
+                  : searchText
+              }
+              className={`bg-gray-800 ${
+                (isRecording || isPending) && 'italic'
+              } w-full min-w-0 px-3 pointer-events-auto  outline-none focus:ring-cyan-400 text-xl`}
+              type='text'
+              name='search'
+              id='search'
+              readOnly={isPending || isRecording}
+              onChange={(e) => {
+                setSearchText(e.target.value)
+              }}
+            />
+            <button
+              onClick={() => {
+                if (!searchText) return
+                setSearchText('')
+              }}
+              className={`${
+                !searchText ? 'invisible' : 'visible'
+              } border-r pointer-events-auto border-r-slate-600 p-1 hover:bg-gray-900`}
+            >
+              <MdClear size={20} />
+            </button>
+
+            <button
+              onClick={recordNow}
+              className={` ${
+                isRecording
+                  ? 'bg-red-600 text-white  animate-my_pulse  '
+                  : 'bg-transparent text-slate-300 bg-gray-700'
+              } cursor-pointer active:bg-gray-900  pointer-events-auto ml-2  active:text-slate-200 p-2  rounded-full`}
+            >
+              {isRecording ? (
+                <FaStopCircle size={30} />
+              ) : (
+                <MdKeyboardVoice size={30} />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </>

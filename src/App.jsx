@@ -78,17 +78,16 @@ export default function App() {
 
   return (
     <>
-      <div className='min-h-[100svh] bg-gray-900 text-slate-200 flex flex-col justify-center items-center '>
+      <div className='min-h-[100svh] p-6 bg-gray-900 text-slate-200 flex flex-col sm:items-center '>
         <h1 className='text-4xl font-bold py-5 my-10'>
           Voice to Text Transcription
         </h1>
-        <div className='flex items-center gap-2'>
-          <div className='flex items-center space-x-2'>
+        <div className='flex w-full sm:w-max flex-col  sm:justify-center  gap-3'>
+          <div className='grid  sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center sm:px-20'>
             <label htmlFor='language'>Language</label>
             <Select
               styles={colourStyles}
               onChange={(option) => {
-                console.log(option)
                 setLanguage(option?.value)
               }}
               options={[
@@ -103,14 +102,13 @@ export default function App() {
               ]}
             />
           </div>
-          <div className='flex items-center space-x-2'>
+          <div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center sm:px-20'>
             <label htmlFor='model'>Model</label>
             <Select
               styles={colourStyles}
               onChange={(option) => {
                 setModel(option?.value)
               }}
-              className='min-w-[24rem]'
               options={[
                 {
                   label: 'Tiny [39MB 1GB-VRAM Speed: 32x]',
@@ -137,11 +135,13 @@ export default function App() {
           </div>
         </div>
 
-        <div className=' bg-gray-800 my-14 ring-gray-200 focus-within:ring-sky-600 pointer-events-none px-3 py-2 flex items-center rounded-lg  ring-2 '>
-          <FaSearch size={19} className='text-slate-400' />
+        <div className=' bg-gray-800 my-14 ring-gray-200 focus-within:ring-sky-600 pointer-events-none px-3 py-2 flex w-full sm:w-max items-center rounded-lg  ring-2 '>
+          <div>
+            <FaSearch size={20} className='text-slate-400' />
+          </div>
           <input
             value={isPending ? 'Please wait...' : searchText}
-            className='bg-gray-800 px-3 pointer-events-auto  outline-none focus:ring-cyan-400 text-xl'
+            className='bg-gray-800 w-full min-w-0 px-3 pointer-events-auto  outline-none focus:ring-cyan-400 text-xl'
             type='text'
             name='search'
             id='search'

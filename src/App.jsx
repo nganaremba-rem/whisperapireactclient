@@ -3,8 +3,11 @@ import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import { FaSearch, FaStopCircle } from 'react-icons/fa'
 import { MdClear, MdKeyboardVoice } from 'react-icons/md'
+import useSound from 'use-sound'
 import Select from 'react-select'
 import useAudioRecorder from './hooks/useAudioRecorder'
+import startSound from '/src/assets/audio/start.mp3'
+import stopSound from '/src/assets/audio/stop.mp3'
 
 const modelOptions = [
   {
@@ -30,13 +33,15 @@ const modelOptions = [
 ]
 
 export default function App() {
-  const cancelTokenSourceRef = useRef(axios.CancelToken.source())
-
   const [searchText, setSearchText] = useState('')
   const { audioBlob, isRecording, recordNow } = useAudioRecorder()
   const [language, setLanguage] = useState('ja')
   const [model, setModel] = useState('base')
   const [error, setError] = useState('')
+  const [playStartSound, { stop: stopStartSound }] = useSound(startSound)
+  const [playStopSound, { stop: stopStopSound }] = useSound(stopSound)
+
+  const cancelTokenSourceRef = useRef(axios.CancelToken.source())
 
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
@@ -216,7 +221,16 @@ export default function App() {
             </button>
 
             <button
-              onClick={recordNow}
+              onClick={() => {
+                if (isRecording) {
+                  stopStartSound()
+                  playStopSound()
+                } else {
+                  stopStopSound()
+                  playStartSound()
+                }
+                recordNow()
+              }}
               className={` ${
                 isRecording
                   ? 'bg-red-600 text-white  animate-my_pulse  '

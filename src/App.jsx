@@ -33,7 +33,7 @@ const modelOptions = [
 export default function App() {
   const [searchText, setSearchText] = useState('')
   const { audioBlob, isRecording, recordNow } = useAudioRecorder()
-  const [language, setLanguage] = useState('Japanese')
+  const [language, setLanguage] = useState('ja')
   const [model, setModel] = useState('base')
   const [error, setError] = useState('')
 
@@ -72,6 +72,10 @@ export default function App() {
       mutate(myFormData)
     }
   }, [audioBlob])
+
+  useEffect(() => {
+    setError('')
+  }, [isRecording])
 
   const colourStyles = {
     control: (styles) => ({ ...styles, backgroundColor: 'rgb(26, 32, 44)' }),
@@ -120,17 +124,17 @@ export default function App() {
               <label htmlFor='language'>Language</label>
               <div className='flex items-center'>
                 <button
-                  onClick={() => setLanguage('Japanese')}
+                  onClick={() => setLanguage('ja')}
                   className={`flex-1 ${
-                    language === 'Japanese' ? 'bg-sky-600' : 'bg-gray-700'
+                    language === 'ja' ? 'bg-sky-600' : 'bg-gray-700'
                   } font-bold tracking-wide rounded p-2`}
                 >
                   日本語
                 </button>
                 <button
-                  onClick={() => setLanguage('English')}
+                  onClick={() => setLanguage('en')}
                   className={`flex-1 ${
-                    language === 'English' ? 'bg-sky-600' : 'bg-gray-700'
+                    language === 'en' ? 'bg-sky-600' : 'bg-gray-700'
                   } tracking-wide rounded p-2`}
                 >
                   English
@@ -184,12 +188,15 @@ export default function App() {
               }}
             />
             <button
+              disabled={isRecording || isPending}
               onClick={() => {
                 if (!searchText) return
                 setSearchText('')
               }}
               className={`${
-                !searchText ? 'invisible' : 'visible'
+                !searchText || isPending || isRecording
+                  ? 'invisible'
+                  : 'visible'
               } border-r pointer-events-auto border-r-slate-600 p-1 hover:bg-gray-900`}
             >
               <MdClear size={20} />

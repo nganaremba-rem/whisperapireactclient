@@ -50,26 +50,16 @@ export default function App() {
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {
       try {
-        if (isDigitalOceanServer) {
-          const { data } = await axios.post('/api/transcribe', myFormData, {
-            cancelToken: cancelTokenSourceRef.current.token,
-            headers: {
-              Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
-            },
-          })
-          setError('')
-          return data?.text
-        }
-        const { data } = await axios.post(
-          'https://transcribe.whisperapi.com',
-          myFormData,
-          {
-            cancelToken: cancelTokenSourceRef.current.token,
-            headers: {
-              Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
-            },
-          }
-        )
+        let endpoint
+        if (isDigitalOceanServer) endpoint = '/api/transcribe'
+        else endpoint = 'https://transcribe.whisperapi.com'
+
+        const { data } = await axios.post(endpoint, myFormData, {
+          cancelToken: cancelTokenSourceRef.current.token,
+          headers: {
+            Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
+          },
+        })
         setError('')
         return data?.text
       } catch (err) {

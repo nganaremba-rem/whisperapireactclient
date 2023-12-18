@@ -88,7 +88,7 @@ export default function App() {
         let endpoint = '/api/transcribe/whisperapi'
 
         const { data } = await axios.post(endpoint, myFormData, {
-          cancelToken: cancelTokenSourceRef.current.token,
+          cancelToken: endPointCancelTokenSourceRef.current.token,
           headers: {
             Authorization: 'Bearer ' + import.meta.env.VITE_WHISPER_API_KEY,
           },
@@ -332,10 +332,10 @@ Implementation: Utilizes the Whisper API installed on the cloud server.'
           >
             <div
               className={`${
-                (endpointIsRecording || isRecording) && 'animate-my_pulse'
+                endpointIsRecording && isRecording && 'animate-my_pulse'
               } `}
             >
-              {endpointIsRecording || isRecording ? 'Stop Both' : 'Record Both'}
+              {endpointIsRecording && isRecording ? 'Stop Both' : 'Record Both'}
             </div>
           </button>
         </div>

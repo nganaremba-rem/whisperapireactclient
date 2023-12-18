@@ -40,6 +40,7 @@ export default function App() {
   const [error, setError] = useState('')
   const [playStartSound, { stop: stopStartSound }] = useSound(startSound)
   const [playStopSound, { stop: stopStopSound }] = useSound(stopSound)
+  const [isDigitalOceanServer, setIsDigitalOceanServer] = useState(false)
 
   const cancelTokenSourceRef = useRef(axios.CancelToken.source())
 
@@ -47,9 +48,23 @@ export default function App() {
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {
       try {
-        const { data } = await axios.post('/api/transcribe', myFormData, {
-          cancelToken: cancelTokenSourceRef.current.token,
-        })
+        if (isDigitalOceanServer) {
+          const { data } = await axios.post('/api/transcribe', myFormData, {
+            cancelToken: cancelTokenSourceRef.current.token,
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_WHISPER_API_KEY}`,
+            },
+          })
+          setError('')
+          return data?.text
+        }
+        const { data } = await axios.post(
+          'https://transcribe.whisperapi.com',
+          myFormData,
+          {
+            cancelToken: cancelTokenSourceRef.current.token,
+          }
+        )
         setError('')
         return data?.text
       } catch (err) {
@@ -72,9 +87,13 @@ export default function App() {
   useEffect(() => {
     if (audioBlob) {
       const myFormData = new FormData()
-      myFormData.append('audioToTranscribe', audioBlob)
+      if (isDigitalOceanServer) {
+        myFormData.append('audioToTranscribe', audioBlob)
+        myFormData.append('model', model || 'base')
+      } else {
+        myFormData.append('file', audioBlob)
+      }
       myFormData.append('language', language || 'ja')
-      myFormData.append('model', model || 'base')
 
       if (isPending) {
         cancelPreviousMutation()
@@ -139,6 +158,28 @@ export default function App() {
           </h1>
           <div className='flex w-full space-y-10 sm:w-max flex-col  sm:justify-center  gap-3'>
             <div className='grid space-y-5 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
+              <label htmlFor='Server'>Server</label>
+              <div className='flex items-center'>
+                <button
+                  onClick={() => setIsDigitalOceanServer(false)}
+                  className={`flex-1 ${
+                    !isDigitalOceanServer ? 'bg-sky-600' : 'bg-gray-700'
+                  } tracking-wide rounded w-max p-2`}
+                >
+                  Whisper API Endpoint
+                </button>
+                <button
+                  onClick={() => setIsDigitalOceanServer(true)}
+                  className={`flex-1 ${
+                    isDigitalOceanServer ? 'bg-sky-600' : 'bg-gray-700'
+                  } font-bold w-max tracking-wide rounded p-2`}
+                >
+                  Digital Ocean Server
+                </button>
+              </div>
+            </div>
+
+            <div className='grid space-y-5 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
               <label htmlFor='language'>Language</label>
               <div className='flex items-center'>
                 <button
@@ -159,19 +200,21 @@ export default function App() {
                 </button>
               </div>
             </div>
-            <div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center'>
-              <label htmlFor='model'>Model</label>
-              <Select
-                styles={colourStyles}
-                onChange={(option) => {
-                  setModel(option?.value)
-                }}
-                options={modelOptions}
-                defaultValue={() => {
-                  return modelOptions.find((option) => option.value === model)
-                }}
-              />
-            </div>
+            {isDigitalOceanServer && (
+              <div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center'>
+                <label htmlFor='model'>Model</label>
+                <Select
+                  styles={colourStyles}
+                  onChange={(option) => {
+                    setModel(option?.value)
+                  }}
+                  options={modelOptions}
+                  defaultValue={() => {
+                    return modelOptions.find((option) => option.value === model)
+                  }}
+                />
+              </div>
+            )}
           </div>
 
           <div

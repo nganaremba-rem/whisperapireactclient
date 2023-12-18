@@ -197,9 +197,14 @@ export default function App() {
     singleValue: (styles) => ({ ...styles, color: 'rgb(255, 255, 255)' }), // Change text color for selected when closed
   }
 
+  const recordBoth = () => {
+    recordNow()
+    endpointRecordNow()
+  }
+
   return (
     <>
-      <div className='min-h-[100svh] bg-gray-900 sm:bg-gray-950 text-slate-200 flex flex-col sm:items-center '>
+      <div className='min-h-[100svh] items-center bg-gray-900 sm:bg-gray-950 text-slate-200 flex flex-col md:flex-row md:justify-center gap-3  '>
         <div className='sm:max-w-[40rem] my-5 sm:shadow-md sm:bg-gray-900 p-6 sm:p-10 rounded-xl mt-5'>
           <h1 className='text-4xl font-bold text-center pb-16'>
             Voice to Text Transcription
@@ -319,6 +324,14 @@ Implementation: Utilizes the Whisper API installed on the cloud server.'
               )}
             </button>
           </div>
+        </div>
+        <div>
+          <button
+            onClick={recordBoth}
+            className='bg-red-700 text-2xl font-bold px-10 py-5 rounded-lg hover:bg-red-900'
+          >
+            Record Both
+          </button>
         </div>
         <div className='sm:max-w-[40rem] my-5 sm:shadow-md sm:bg-gray-900 p-6 sm:p-10 rounded-xl mt-5'>
           <div className='flex w-full space-y-10 sm:w-max flex-col  sm:justify-center  gap-3'>

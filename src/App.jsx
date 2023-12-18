@@ -54,6 +54,9 @@ export default function App() {
 
         const { data } = await axios.post(endpoint, myFormData, {
           cancelToken: cancelTokenSourceRef.current.token,
+          headers: {
+            Authorization: 'Bearer ' + import.meta.env.VITE_WHISPER_API_KEY,
+          },
         })
         setError('')
         return data?.text

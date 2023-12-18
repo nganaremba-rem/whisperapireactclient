@@ -328,9 +328,15 @@ Implementation: Utilizes the Whisper API installed on the cloud server.'
         <div>
           <button
             onClick={recordBoth}
-            className='bg-red-700 text-2xl font-bold px-10 py-5 rounded-lg hover:bg-red-900'
+            className={` cursor-pointer min-w-[14rem] bg-red-600 text-white text-3xl active:bg-gray-900  pointer-events-auto ml-2  active:text-slate-200 px-4 py-3  rounded-lg font-bold`}
           >
-            Record Both
+            <div
+              className={`${
+                (endpointIsRecording || isRecording) && 'animate-my_pulse'
+              } `}
+            >
+              {endpointIsRecording || isRecording ? 'Stop Both' : 'Record Both'}
+            </div>
           </button>
         </div>
         <div className='sm:max-w-[40rem] my-5 sm:shadow-md sm:bg-gray-900 p-6 sm:p-10 rounded-xl mt-5'>

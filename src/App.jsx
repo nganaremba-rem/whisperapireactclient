@@ -48,7 +48,9 @@ export default function App() {
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {
       try {
-        let endpoint = '/api/transcribe'
+        let endpoint
+        if (isDigitalOceanServer) endpoint = '/api/transcribe'
+        else endpoint = '/api/transcribe/whisperapi'
 
         const { data } = await axios.post(endpoint, myFormData, {
           cancelToken: cancelTokenSourceRef.current.token,

@@ -44,6 +44,8 @@ export default function App() {
 
   const cancelTokenSourceRef = useRef(axios.CancelToken.source())
 
+  const VITE_WHISPER_API_KEY = import.meta.env.VITE_WHISPER_API_KEY
+
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {
@@ -52,7 +54,7 @@ export default function App() {
           const { data } = await axios.post('/api/transcribe', myFormData, {
             cancelToken: cancelTokenSourceRef.current.token,
             headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_WHISPER_API_KEY}`,
+              Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
             },
           })
           setError('')
@@ -63,6 +65,9 @@ export default function App() {
           myFormData,
           {
             cancelToken: cancelTokenSourceRef.current.token,
+            headers: {
+              Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
+            },
           }
         )
         setError('')

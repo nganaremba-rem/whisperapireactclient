@@ -46,6 +46,8 @@ export default function App() {
 
   const VITE_WHISPER_API_KEY = import.meta.env.VITE_WHISPER_API_KEY
 
+  console.log(VITE_WHISPER_API_KEY)
+
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {

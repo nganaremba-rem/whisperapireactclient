@@ -44,21 +44,14 @@ export default function App() {
 
   const cancelTokenSourceRef = useRef(axios.CancelToken.source())
 
-  const VITE_WHISPER_API_KEY = import.meta.env.VITE_WHISPER_API_KEY
-
   const { mutate, isPending } = useMutation({
     mutationKey: ['postAudio'],
     mutationFn: async (myFormData) => {
       try {
-        let endpoint
-        if (isDigitalOceanServer) endpoint = '/api/transcribe'
-        else endpoint = 'https://transcribe.whisperapi.com'
+        let endpoint = '/api/transcribe'
 
         const { data } = await axios.post(endpoint, myFormData, {
           cancelToken: cancelTokenSourceRef.current.token,
-          headers: {
-            Authorization: `Bearer ${VITE_WHISPER_API_KEY}`,
-          },
         })
         setError('')
         return data?.text
@@ -83,11 +76,9 @@ export default function App() {
     if (audioBlob) {
       const myFormData = new FormData()
       if (isDigitalOceanServer) {
-        myFormData.append('audioToTranscribe', audioBlob)
         myFormData.append('model', model || 'base')
-      } else {
-        myFormData.append('file', audioBlob)
       }
+      myFormData.append('file', audioBlob)
       myFormData.append('language', language || 'ja')
 
       if (isPending) {

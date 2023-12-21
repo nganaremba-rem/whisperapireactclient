@@ -57,7 +57,6 @@ export default function App() {
     mutationFn: async (myFormData) => {
       try {
         let endpoint = '/api/transcribe'
-        //  endpoint = '/api/transcribe/whisperapi'
 
         const { data } = await axios.post(endpoint, myFormData, {
           cancelToken: cancelTokenSourceRef.current.token,
@@ -89,9 +88,6 @@ export default function App() {
 
         const { data } = await axios.post(endpoint, myFormData, {
           cancelToken: endPointCancelTokenSourceRef.current.token,
-          headers: {
-            Authorization: 'Bearer ' + import.meta.env.VITE_WHISPER_API_KEY,
-          },
         })
         setEndpointError('')
         return data?.text

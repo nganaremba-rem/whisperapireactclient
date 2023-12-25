@@ -1,8 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/api/(.*)",
-      "destination": "http://139.59.254.243:3000/api/$1"
-    }
-  ]
-}

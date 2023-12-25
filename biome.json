@@ -6,14 +6,33 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"correctness": {
+				"all": true
+			},
 			"performance": {
 				"all": true
 			},
-			"recommended": true
+			"recommended": true,
+			"a11y": {
+				"all": true
+			},
+			"security": {
+				"all": true
+			},
+			"style": {
+				"all": true
+			},
+			"suspicious": {
+				"all": true
+			},
+			"complexity": {
+				"all": true
+			}
 		}
 	},
 	"javascript": {
 		"formatter": {
+			"enabled": true,
 			"quoteStyle": "single",
 			"jsxQuoteStyle": "single",
 			"semicolons": "asNeeded"

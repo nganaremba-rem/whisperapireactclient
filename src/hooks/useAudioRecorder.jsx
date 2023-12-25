@@ -21,7 +21,9 @@ function useAudioRecorder({
 			recorder.stop()
 			// Release the media stream to free up the microphone
 			const tracks = recorder.stream.getTracks()
-			for (const track of tracks) track.stop()
+			for (const track of tracks) {
+				track.stop()
+			}
 			return
 		}
 		// start recording

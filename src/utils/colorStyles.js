@@ -12,9 +12,13 @@ export const colourStyles = {
 			cursor = 'not-allowed'
 			activeBackgroundColor = undefined
 		} else {
-			if (isSelected) backgroundColor = 'rgb(3, 102, 214)'
-			else if (isFocused) backgroundColor = 'rgb(31, 41, 55)'
-			else backgroundColor = undefined
+			if (isSelected) {
+				backgroundColor = 'rgb(3, 102, 214)'
+			} else if (isFocused) {
+				backgroundColor = 'rgb(31, 41, 55)'
+			} else {
+				backgroundColor = undefined
+			}
 
 			color = isSelected ? 'white' : 'rgb(255, 255, 255)'
 			cursor = 'default'

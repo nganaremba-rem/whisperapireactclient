@@ -19,9 +19,7 @@ function useMutateApiRequest({
 				return data?.text
 			} catch (err) {
 				// Check if the error is due to cancellation
-				if (axios.isCancel(err)) {
-					console.log('Request canceled:', err.message)
-				} else {
+				if (!axios.isCancel(err)) {
 					throw new Error(err)
 				}
 			}

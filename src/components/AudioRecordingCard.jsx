@@ -135,7 +135,7 @@ Implementation: Utilizes the Whisper API installed on the cloud server.'
 						className={`text-[#60AEFF] ${
 							isRecording
 								? 'bg-red-600 text-white  animate-my_pulse  '
-								: 'bg-transparent text-slate-300 bg-gray-700'
+								: 'bg-transparent  bg-gray-700'
 						} cursor-pointer active:bg-white  pointer-events-auto  active:text-[#60AEFF] p-2  rounded-full`}
 					>
 						{isRecording ? (

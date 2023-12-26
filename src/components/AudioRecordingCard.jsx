@@ -15,7 +15,6 @@ function AudioRecordingCard({
 	model = null,
 	error,
 	isRecording,
-	textFieldValueState,
 	isPending,
 	setSearchText,
 	searchText,
@@ -23,7 +22,7 @@ function AudioRecordingCard({
 	desc,
 }) {
 	return (
-		<div className='sm:max-w-[40rem] my-5 sm:shadow-2xl   bg-slate-100 p-6 sm:p-10 rounded-xl mt-5'>
+		<div className='sm:max-w-[40rem] my-5 sm:shadow-2xl   bg-slate-50 p-6 sm:p-10 rounded-xl mt-5'>
 			<h1 className='text-4xl font-bold text-center pb-16'>
 				Voice to Text Transcription
 			</h1>
@@ -44,7 +43,6 @@ function AudioRecordingCard({
 				recordNow={recordNow}
 				searchText={searchText}
 				setSearchText={setSearchText}
-				textFieldValueState={textFieldValueState}
 			/>
 		</div>
 	)

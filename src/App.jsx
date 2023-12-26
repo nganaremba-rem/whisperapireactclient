@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import AudioRecordingCard from './components/AudioRecordingCard'
 import RecordBothButton from './components/RecordBothButton'
 import { modelOptions } from './constants/modelOptions'
 import useAudioRecorder from './hooks/useAudioRecorder'
 import useMutateApiRequest from './hooks/useMutateApiRequest'
-import { cancelPreviousMutation } from './utils/mutationCancel'
+import { makeFormDataAndMutate } from './utils/makeFormDataAndMutate'
 
 export default function App() {
 	const [searchText, setSearchText] = useState('')
@@ -38,32 +38,27 @@ export default function App() {
 
 	const onAudioBlobAvailable = useCallback(
 		(audioBlob) => {
-			const myFormData = new FormData()
-			myFormData.append('model', model || 'base')
-			myFormData.append('file', audioBlob)
-			myFormData.append('language', language || 'ja')
-
-			if (isPending) {
-				cancelPreviousMutation({ cancelTokenSourceRef, axios })
-			}
-			mutate(myFormData)
+			makeFormDataAndMutate({
+				audioBlob,
+				cancelTokenSourceRef,
+				isPending,
+				mutate,
+				language,
+				model,
+			})
 		},
 		[mutate, language, isPending, model],
 	)
 
 	const endpointOnAudioBlobAvailable = useCallback(
 		(audioBlob) => {
-			const myFormData = new FormData()
-			myFormData.append('file', audioBlob)
-			myFormData.append('language', endpointLanguage || 'ja')
-
-			if (endpointIsPending) {
-				cancelPreviousMutation({
-					axios,
-					cancelTokenSourceRef: endPointCancelTokenSourceRef,
-				})
-			}
-			endPointMutate(myFormData)
+			makeFormDataAndMutate({
+				audioBlob,
+				cancelTokenSourceRef: endPointCancelTokenSourceRef,
+				isPending: endpointIsPending,
+				mutate: endPointMutate,
+				language: endpointLanguage,
+			})
 		},
 		[endPointMutate, endpointLanguage, endpointIsPending],
 	)
@@ -80,29 +75,11 @@ export default function App() {
 		})
 
 	const recordBoth = () => {
-		recordNow()
-		endpointRecordNow()
+		recordNow({ isAllRecordingStateSame: isRecording === endpointIsRecording })
+		endpointRecordNow({
+			isAllRecordingStateSame: isRecording === endpointIsRecording,
+		})
 	}
-
-	const endpointTextFieldValueState = useMemo(() => {
-		if (endpointIsPending) {
-			return 'Please wait...'
-		}
-		if (endpointIsRecording) {
-			return 'Recording...'
-		}
-		return endpointSearchText
-	}, [endpointIsPending, endpointIsRecording, endpointSearchText])
-
-	const textFieldValueState = useMemo(() => {
-		if (isPending) {
-			return 'Please wait...'
-		}
-		if (isRecording) {
-			return 'Recording...'
-		}
-		return searchText
-	}, [isPending, isRecording, searchText])
 
 	return (
 		<>
@@ -116,7 +93,6 @@ export default function App() {
 					searchText={searchText}
 					setLanguage={setLanguage}
 					setSearchText={setSearchText}
-					textFieldValueState={textFieldValueState}
 					title={'Local Whisper Server'}
 					model={model}
 					modelOptions={modelOptions}
@@ -143,7 +119,6 @@ export default function App() {
 					searchText={endpointSearchText}
 					setLanguage={setEndpointLanguage}
 					setSearchText={setEndpointSearchText}
-					textFieldValueState={endpointTextFieldValueState}
 				/>
 			</div>
 		</>

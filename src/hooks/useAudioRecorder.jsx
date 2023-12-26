@@ -15,18 +15,27 @@ function useAudioRecorder({
 		setAudioBlob(null)
 	}
 
-	const recordNow = () => {
-		// if it is currently recording. Stop the recording
+	const stopRecording = () => {
 		if (isRecording) {
 			recorder.stop()
-			// Release the media stream to free up the microphone
-			const tracks = recorder.stream.getTracks()
-			for (const track of tracks) {
-				track.stop()
-			}
+		}
+		// Release the media stream to free up the microphone
+		const tracks = recorder.stream.getTracks()
+		for (const track of tracks) {
+			track.stop()
+		}
+	}
+
+	const recordNow = ({ isAllRecordingStateSame = true } = {}) => {
+		if (!isAllRecordingStateSame) {
+			stopRecording()
+		} else if (isRecording) {
+			stopRecording()
 			return
 		}
+
 		// start recording
+
 		setError('')
 		clearAudioBlob()
 		window.navigator.mediaDevices

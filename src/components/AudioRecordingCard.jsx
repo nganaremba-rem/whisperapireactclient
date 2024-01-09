@@ -24,7 +24,7 @@ function AudioRecordingCard({
 }) {
 	return (
 		// <div className='sm:max-w-[40rem] flex gap-14 flex-col justify-center min-h-[30rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
-		<div className='sm:max-w-[40rem] grid justify-center min-h-[30rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
+		<div className='sm:max-w-[40rem] grid justify-center min-h-[30rem] shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
 			<header className='text-center grid gap-7'>
 				<div>
 					<h1 className='text-2xl font-bold'>

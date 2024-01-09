@@ -83,7 +83,7 @@ export default function App() {
 
 	return (
 		<>
-			<div className='min-h-[100svh] p-2 items-center   bg-slate-100 text-gray-800 flex flex-col xl:flex-row xl:justify-center gap-3 '>
+			<div className='min-h-[100svh] px-1 py-5 items-center   bg-slate-100 text-gray-800 flex flex-col xl:flex-row xl:justify-center gap-3 '>
 				<AudioRecordingCard
 					titleColor='text-green-600'
 					title={'Whisper Endpoint Server (Fast)'}

@@ -37,7 +37,7 @@ function AudioRecordingCard({
 				<TitleAndDescription color={titleColor} title={title} desc={desc} />
 			</header>
 			<div className='flex w-full space-y-7 sm:w-max flex-col  sm:justify-center'>
-				<div className='grid space-y-5 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
+				<div className='grid space-y-1 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
 					<LanguageSelection language={language} setLanguage={setLanguage} />
 				</div>
 				<div className='min-h-[2rem]'>

@@ -22,7 +22,7 @@ function AudioRecordingCard({
 	desc,
 }) {
 	return (
-		<div className='sm:max-w-[40rem] sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
+		<div className='sm:max-w-[40rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
 			<h1 className='text-4xl font-bold text-center pb-16'>
 				Voice to Text Transcription
 			</h1>

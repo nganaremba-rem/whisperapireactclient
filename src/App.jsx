@@ -83,7 +83,7 @@ export default function App() {
 
 	return (
 		<>
-			<div className='min-h-[100svh] items-center   bg-slate-100 text-gray-800 flex flex-col md:flex-row md:justify-center gap-3  '>
+			<div className='min-h-[100svh] p-2 items-center   bg-slate-100 text-gray-800 flex flex-col md:flex-row md:justify-center gap-3 '>
 				<AudioRecordingCard
 					error={error}
 					isPending={isPending}

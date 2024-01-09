@@ -4,9 +4,9 @@ function TitleAndDescription({ title, desc }) {
 	return (
 		<div
 			title={desc}
-			className='text-center text-lg font-extrabold tracking-wide'
+			className='text-center text-rose-600 text-lg font-extrabold tracking-wide'
 		>
-			Whisper Server ({title})
+			{title}
 		</div>
 	)
 }

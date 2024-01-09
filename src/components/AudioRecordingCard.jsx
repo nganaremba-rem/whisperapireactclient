@@ -22,28 +22,36 @@ function AudioRecordingCard({
 	desc,
 }) {
 	return (
-		<div className='sm:max-w-[40rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
-			<h1 className='text-4xl font-bold text-center pb-16'>
-				Voice to Text Transcription
-			</h1>
-			<div className='flex w-full space-y-10 sm:w-max flex-col  sm:justify-center  gap-3'>
+		<div className='sm:max-w-[40rem] flex gap-14 flex-col justify-center min-h-[30rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
+			<header className='text-center grid gap-7'>
+				<div>
+					<h1 className='text-2xl font-bold'>
+						L3-ASR (Automatic Speech Recognition)
+					</h1>
+					<p className='font-bold text-gray-700 tracking-wide'>
+						Voice-to-Text Transcription
+					</p>
+				</div>
 				<TitleAndDescription title={title} desc={desc} />
-
+			</header>
+			<div className='flex w-full space-y-7 sm:w-max flex-col  sm:justify-center'>
 				<div className='grid space-y-5 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
 					<LanguageSelection language={language} setLanguage={setLanguage} />
 				</div>
 				{modelOptions && <ModelSelection model={model} setModel={setModel} />}
 			</div>
 
-			<ErrorText error={error} isRecording={isRecording} />
+			<div>
+				<ErrorText error={error} isRecording={isRecording} />
 
-			<SearchInputWithVoice
-				isPending={isPending}
-				isRecording={isRecording}
-				recordNow={recordNow}
-				searchText={searchText}
-				setSearchText={setSearchText}
-			/>
+				<SearchInputWithVoice
+					isPending={isPending}
+					isRecording={isRecording}
+					recordNow={recordNow}
+					searchText={searchText}
+					setSearchText={setSearchText}
+				/>
+			</div>
 		</div>
 	)
 }

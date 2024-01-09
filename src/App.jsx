@@ -83,7 +83,7 @@ export default function App() {
 
 	return (
 		<>
-			<div className='min-h-[100svh] p-2 items-center   bg-slate-100 text-gray-800 flex flex-col md:flex-row md:justify-center gap-3 '>
+			<div className='min-h-[100svh] p-2 items-center   bg-slate-100 text-gray-800 flex flex-col xl:flex-row xl:justify-center gap-3 '>
 				<AudioRecordingCard
 					error={error}
 					isPending={isPending}
@@ -93,7 +93,7 @@ export default function App() {
 					searchText={searchText}
 					setLanguage={setLanguage}
 					setSearchText={setSearchText}
-					title={'Local Whisper Server'}
+					title={'Local Whisper Server (Slow)'}
 					model={model}
 					modelOptions={modelOptions}
 					setModel={setModel}
@@ -108,7 +108,7 @@ export default function App() {
 					/>
 				</div>
 				<AudioRecordingCard
-					title={'Whisper Endpoint Server'}
+					title={'Whisper Endpoint Server (Fast)'}
 					desc='Description: This server is configured making an api request with paid API_KEY from the provided endpoint of Whisper API. It handles transcription processes, serving the resulting text.
 					Implementation: Utilizes the Whisper API endpoint from the whisperapi.com.'
 					error={endpointError}

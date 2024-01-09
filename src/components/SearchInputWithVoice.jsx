@@ -23,7 +23,7 @@ function SearchInputWithVoice({
 	)
 
 	return (
-		<div className=' bg-[#DCECFF] mb-5   px-3 py-2 flex w-full items-center rounded-lg   '>
+		<div className=' bg-[#DCECFF] px-3 py-2 flex w-full items-center rounded-lg   '>
 			<div>
 				<FaSearch size={20} className='text-[#797B7E]' />
 			</div>

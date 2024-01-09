@@ -4,8 +4,8 @@ function ErrorText({ error, isRecording }) {
 	return (
 		<div
 			className={`${
-				error !== '' && !isRecording ? 'visible' : 'invisible'
-			} py-6 text-red-400 font-bold tracking-wide`}
+				error !== '' && !isRecording ? 'block' : 'hidden'
+			} py-2 text-red-400 font-bold tracking-wide`}
 		>
 			{error || 'Error'}
 		</div>

@@ -1,10 +1,10 @@
 import React from 'react'
 
-function TitleAndDescription({ title, desc }) {
+function TitleAndDescription({ title, desc, color }) {
 	return (
 		<div
 			title={desc}
-			className='text-center text-rose-600 text-lg font-extrabold tracking-wide'
+			className={`text-center ${color} text-lg font-extrabold tracking-wide`}
 		>
 			{title}
 		</div>

@@ -85,6 +85,28 @@ export default function App() {
 		<>
 			<div className='min-h-[100svh] p-2 items-center   bg-slate-100 text-gray-800 flex flex-col xl:flex-row xl:justify-center gap-3 '>
 				<AudioRecordingCard
+					titleColor='text-green-600'
+					title={'Whisper Endpoint Server (Fast)'}
+					desc='Description: This server is configured making an api request with paid API_KEY from the provided endpoint of Whisper API. It handles transcription processes, serving the resulting text.
+					Implementation: Utilizes the Whisper API endpoint from the whisperapi.com.'
+					error={endpointError}
+					isPending={endpointIsPending}
+					isRecording={endpointIsRecording}
+					language={endpointLanguage}
+					recordNow={endpointRecordNow}
+					searchText={endpointSearchText}
+					setLanguage={setEndpointLanguage}
+					setSearchText={setEndpointSearchText}
+				/>
+				<div>
+					<RecordBothButton
+						endpointIsRecording={endpointIsRecording}
+						isRecording={isRecording}
+						recordBoth={recordBoth}
+					/>
+				</div>
+
+				<AudioRecordingCard
 					error={error}
 					isPending={isPending}
 					isRecording={isRecording}
@@ -99,26 +121,6 @@ export default function App() {
 					setModel={setModel}
 					desc='Description: This server is configured with a local installation of Whisper API on a cloud server. It handles transcription processes, serving the resulting text.
 					Implementation: Utilizes the Whisper API installed on the cloud server.'
-				/>
-				<div>
-					<RecordBothButton
-						endpointIsRecording={endpointIsRecording}
-						isRecording={isRecording}
-						recordBoth={recordBoth}
-					/>
-				</div>
-				<AudioRecordingCard
-					title={'Whisper Endpoint Server (Fast)'}
-					desc='Description: This server is configured making an api request with paid API_KEY from the provided endpoint of Whisper API. It handles transcription processes, serving the resulting text.
-					Implementation: Utilizes the Whisper API endpoint from the whisperapi.com.'
-					error={endpointError}
-					isPending={endpointIsPending}
-					isRecording={endpointIsRecording}
-					language={endpointLanguage}
-					recordNow={endpointRecordNow}
-					searchText={endpointSearchText}
-					setLanguage={setEndpointLanguage}
-					setSearchText={setEndpointSearchText}
 				/>
 			</div>
 		</>

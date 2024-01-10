@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { FaSearch, FaStopCircle } from 'react-icons/fa'
 import { IoMicOutline } from 'react-icons/io5'
 import { MdClear } from 'react-icons/md'
+import { default as TextareaAutosize } from 'react-textarea-autosize'
 import useSound from 'use-sound'
 import startSound from '/src/assets/audio/start.mp3'
 import stopSound from '/src/assets/audio/stop.mp3'
@@ -28,11 +29,10 @@ function SearchInputWithVoice({
 				<FaSearch size={20} className='text-[#797B7E]' />
 			</div>
 			<div className='p-2 ml-3 w-full pointer-events-none ring-2 ring-gray-200 focus-within:ring-sky-600 bg-white rounded mr-2 flex items-center'>
-				<input
-					value={textFieldValueState}
-					className={`bg-white text-[#333] ${
+				<TextareaAutosize
+					className={`bg-white  text-[#333]  resize-none ${
 						(isRecording || isPending) && 'italic text-gray-400'
-					}  rounded w-full min-w-0  pointer-events-auto  outline-none focus:ring-cyan-400 text-xl`}
+					} focus:outline-none transition duration-300 ease-in-out  rounded w-full min-w-0  pointer-events-auto  outline-none focus:ring-cyan-400 text-xl`}
 					type='text'
 					name='search'
 					id='search'
@@ -40,6 +40,8 @@ function SearchInputWithVoice({
 					onChange={(e) => {
 						setSearchText(e.target.value)
 					}}
+					value={textFieldValueState}
+					maxRows={8}
 				/>
 				<button
 					type='button'

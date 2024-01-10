@@ -35,7 +35,8 @@
 			"enabled": true,
 			"quoteStyle": "single",
 			"jsxQuoteStyle": "single",
-			"semicolons": "asNeeded"
+			"semicolons": "asNeeded",
+			"indentWidth": 2
 		}
 	}
 }

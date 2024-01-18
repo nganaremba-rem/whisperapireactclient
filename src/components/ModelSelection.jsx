@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import { modelOptions } from '../constants/modelOptions'
 
-function ModelSelection({ setModel, model }) {
+export function ModelSelection({ setModel, model }) {
 	return (
 		<div className='grid sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center sm:justify-center'>
 			<label htmlFor='model'>Model</label>
@@ -18,5 +18,3 @@ function ModelSelection({ setModel, model }) {
 		</div>
 	)
 }
-
-export default ModelSelection

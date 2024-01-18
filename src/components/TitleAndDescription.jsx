@@ -1,6 +1,6 @@
 import React from 'react'
 
-function TitleAndDescription({ title, desc, color }) {
+export function TitleAndDescription({ title, desc, color }) {
 	return (
 		<div
 			title={desc}
@@ -10,5 +10,3 @@ function TitleAndDescription({ title, desc, color }) {
 		</div>
 	)
 }
-
-export default TitleAndDescription

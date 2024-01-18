@@ -1,4 +1,4 @@
-function LanguageSelection({ setLanguage, language }) {
+export function LanguageSelection({ setLanguage, language }) {
 	return (
 		<>
 			<label htmlFor='language'>Language</label>
@@ -25,5 +25,3 @@ function LanguageSelection({ setLanguage, language }) {
 		</>
 	)
 }
-
-export default LanguageSelection

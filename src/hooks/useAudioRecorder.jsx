@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function useAudioRecorder({
+export function useAudioRecorder({
 	setError = () => {},
 	onAudioBlobAvailable = () => {},
 }) {
@@ -68,5 +68,3 @@ function useAudioRecorder({
 
 	return { isRecording, audioUrl, recordNow, audioBlob }
 }
-
-export default useAudioRecorder

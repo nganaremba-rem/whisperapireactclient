@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"target": "ES2020",
+		"jsx": "react",
+		"allowImportingTsExtensions": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"paths": {
+			"@*": ["*"],
+			"@pages": ["./src/pages"],
+			"@components": ["./src/components"],
+			"@utils": ["./src/utils"],
+			"@constants": ["./src/constants"],
+			"@hooks": ["./src/hooks"],
+		},
+		"baseUrl": "./src"
+	},
+	"exclude": ["node_modules", "**/node_modules/*"],
+}

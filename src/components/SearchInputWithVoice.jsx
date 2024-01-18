@@ -8,7 +8,7 @@ import startSound from '/src/assets/audio/start.mp3'
 import stopSound from '/src/assets/audio/stop.mp3'
 import { getTextFieldState } from '../utils/getTextFieldState'
 
-function SearchInputWithVoice({
+export function SearchInputWithVoice({
 	isRecording,
 	isPending,
 	setSearchText,
@@ -90,5 +90,3 @@ function SearchInputWithVoice({
 		</div>
 	)
 }
-
-export default SearchInputWithVoice

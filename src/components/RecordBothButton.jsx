@@ -1,4 +1,8 @@
-function RecordBothButton({ recordBoth, endpointIsRecording, isRecording }) {
+export function RecordBothButton({
+	recordBoth,
+	endpointIsRecording,
+	isRecording,
+}) {
 	return (
 		<button
 			type='button'
@@ -17,5 +21,3 @@ function RecordBothButton({ recordBoth, endpointIsRecording, isRecording }) {
 		</button>
 	)
 }
-
-export default RecordBothButton

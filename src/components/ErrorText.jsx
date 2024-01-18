@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ErrorText({ error, isRecording }) {
+export function ErrorText({ error, isRecording }) {
 	return (
 		<div
 			className={`${
@@ -11,5 +11,3 @@ function ErrorText({ error, isRecording }) {
 		</div>
 	)
 }
-
-export default ErrorText

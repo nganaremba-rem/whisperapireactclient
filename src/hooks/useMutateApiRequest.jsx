@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
-function useMutateApiRequest({
+export function useMutateApiRequest({
 	mutationKey,
 	url,
 	cancelTokenSourceRef,
@@ -32,5 +32,3 @@ function useMutateApiRequest({
 		},
 	})
 }
-
-export default useMutateApiRequest

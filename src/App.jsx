@@ -98,15 +98,15 @@ export default function App() {
 					setLanguage={setEndpointLanguage}
 					setSearchText={setEndpointSearchText}
 				/>
-				<div>
+				{/* <div>
 					<RecordBothButton
 						endpointIsRecording={endpointIsRecording}
 						isRecording={isRecording}
 						recordBoth={recordBoth}
 					/>
-				</div>
+				</div> */}
 
-				<AudioRecordingCard
+				{/* <AudioRecordingCard
 					error={error}
 					isPending={isPending}
 					isRecording={isRecording}
@@ -121,7 +121,7 @@ export default function App() {
 					setModel={setModel}
 					desc='Description: This server is configured with a local installation of Whisper API on a cloud server. It handles transcription processes, serving the resulting text.
 					Implementation: Utilizes the Whisper API installed on the cloud server.'
-				/>
+				/> */}
 			</div>
 		</>
 	)

@@ -24,8 +24,8 @@ function AudioRecordingCard({
 }) {
 	return (
 		// <div className='sm:max-w-[40rem] flex gap-14 flex-col justify-center min-h-[30rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
-		<div className='sm:max-w-[40rem] grid justify-center min-h-[30rem] shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
-			<header className='text-center grid gap-7'>
+		<div className='sm:max-w-[40rem] grid justify-center space-y-16 shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
+			<header className='text-center'>
 				<div>
 					<h1 className='text-2xl font-bold'>
 						L3-ASR (Automatic Speech Recognition)
@@ -34,15 +34,15 @@ function AudioRecordingCard({
 						Voice-to-Text Transcription
 					</p>
 				</div>
-				<TitleAndDescription color={titleColor} title={title} desc={desc} />
+				{/* <TitleAndDescription color={titleColor} title={title} desc={desc} /> */}
 			</header>
 			<div className='flex w-full space-y-7 sm:w-max flex-col  sm:justify-center'>
-				<div className='grid space-y-1 sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
+				<div className='grid sm:space-y-0 sm:grid-cols-[1fr_368px] sm:gap-5 sm:items-center'>
 					<LanguageSelection language={language} setLanguage={setLanguage} />
 				</div>
-				<div className='min-h-[2rem]'>
+				{/* <div className='min-h-[2rem]'>
 					{modelOptions && <ModelSelection model={model} setModel={setModel} />}
-				</div>
+				</div> */}
 			</div>
 
 			<div>

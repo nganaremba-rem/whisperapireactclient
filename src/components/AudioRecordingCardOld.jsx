@@ -23,7 +23,7 @@ export function AudioRecordingCardOld({
 }) {
 	return (
 		// <div className='sm:max-w-[40rem] flex gap-14 flex-col justify-center min-h-[30rem] m-1 sm:m-0 sm:shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl'>
-		<div className='sm:max-w-[40rem] relative grid justify-center min-h-[30rem] shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
+		<div className='sm:max-w-[40rem] pt-10 relative grid justify-center min-h-[30rem] shadow-2xl bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
 			<Link
 				className='absolute text-gray-700 underline right-0 top-0 p-3'
 				to={'/'}

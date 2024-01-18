@@ -14,7 +14,7 @@ export function AudioRecordingCard({
 	recordNow,
 }) {
 	return (
-		<div className='sm:max-w-[40rem] bg-white relative grid justify-center gap-16 sm:shadow-2xl sm:bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
+		<div className='sm:max-w-[40rem] pt-10 bg-white relative grid justify-center gap-16 sm:shadow-2xl sm:bg-slate-50 p-6 sm:p-10 rounded-xl sm:m-0'>
 			<Link
 				className='absolute text-gray-700 underline right-0 top-0 p-3'
 				to={'/old'}
